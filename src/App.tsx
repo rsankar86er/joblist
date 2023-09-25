@@ -1,12 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import Header from './Components/Header';
-import JobCard from './Components/JobCard';
+import JobList from './pages/JobList';
+import CreateJob from './pages/CreateJob';
 
 function App() {
   return (
     <>
-      <Header></Header>
-      <JobCard></JobCard>
+    <BrowserRouter>
+      <Routes>
+        <Route>
+          <Route path="/" element={<JobList/>} />
+          <Route path="/createjob" element={<CreateJob/>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>  
     </>
   );
 }

@@ -13,4 +13,20 @@ body {
     height: 320px;
     border-radius: 10px;
   }
+  .text-white{
+    color: #FAFAFA;
+  }
+  .text-dark{
+    color: #212121;
+  }
+  .text-blue{
+    color: #1597E4;
+  }
+  .btn-primary{
+    background-color: #1597E4;
+  }
+  .btn-secondary{
+    border-width: 1px;
+    border-color: #1597E4;
+  }
 }
