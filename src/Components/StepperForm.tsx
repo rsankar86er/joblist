@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { setJob } from "../redux/createJobReducer";
+import { createJob } from "../services/createJob";
 
 const CreateJobSchema = Yup.object().shape({
     jobtitle: Yup.string().required('Job Title is required'),
@@ -10,7 +11,7 @@ const CreateJobSchema = Yup.object().shape({
     industry: Yup.string().required('Industry is required'),
 });
 
-const formInitialValues = {jobtitle:'',companyname:'', industry:'', location:'', remote:'', minexp:'', maxexp:'', minsalary:'', maxsalary:'', time:'', employees:'', applytype:1};
+const formInitialValues = {jobtitle:'',companyname:'', industry:'', location:'', remote:'', minexp:'', maxexp:'', minsalary:'', maxsalary:'', time:'', employees:'', applytype:'1'};
 
 const StepperForm = ()=>{
     const [step, setStep] = useState(1);
@@ -27,6 +28,7 @@ const StepperForm = ()=>{
         onSubmit: async (values) => {
             dispatch(setJob(values));
             step === 1 && setStep(step+1);
+            step === 2 && await createJob(values);
         }
     });
 
@@ -114,8 +116,8 @@ const StepperForm = ()=>{
                     <div className="row pt-6 pb-1">
                         <label className="block w-full text-sm font-medium">Apply type</label>
                         <div className="mt-2">
-                            <input type="radio" name="applytype" checked={formik.values.applytype === 1} onChange={formik.handleChange} className="mr-1" value={1}/><span className="placeholder mr-4 text-sm">Quick apply</span>
-                            <input type="radio" name="applytype" checked={formik.values.applytype === 2} onChange={formik.handleChange} className="mr-1" value={2}/><span className="placeholder text-sm">External apply</span>
+                            <input type="radio" name="applytype" checked={formik.values.applytype === '1'} onChange={formik.handleChange} className="mr-1" value={'1'}/><span className="placeholder mr-4 text-sm">Quick apply</span>
+                            <input type="radio" name="applytype" checked={formik.values.applytype === '2'} onChange={formik.handleChange} className="mr-1" value={'2'}/><span className="placeholder text-sm">External apply</span>
                         </div>
                     </div>
                 </div>)
@@ -124,6 +126,7 @@ const StepperForm = ()=>{
     }
     
     return(
+    <>
         <div className="flex justify-center">
             <div className="card m-5 form-size p-8 grid content-between">
             <form className='CreateRoleForm' onSubmit={formik.handleSubmit}>
@@ -141,6 +144,7 @@ const StepperForm = ()=>{
             </form>
             </div>
         </div>
+    </>
     )
 }
 export default StepperForm;

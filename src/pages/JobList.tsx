@@ -2,21 +2,28 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import JobCard from "../components/JobCard";
 import { getJobs } from "../services/getJobs";
+import Loader from "../components/Loader";
 
 const JobList = () => {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        getJobs().then((res)=>{setJobs(res)});
+        getJobs().then((response)=>{setJobs(response?.data)});
     }, []);
     
     return (
-        <div>
+        <>
             <Header></Header>
-            {jobs.length > 0 ? jobs.map((job) => {
-                return <JobCard key={job['id']} job={job} />
-            }) : <div>loading...</div>}
-        </div>
+            <div className="container mx-auto my-5 h-full">
+                    {  
+                        jobs.length > 0 ? 
+                        <div className="grid sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-2 gap-4 place-items-center">
+                            { jobs.map((job) => { return <JobCard key={job['id']} job={job} /> })}
+                        </div> 
+                        : <Loader></Loader>
+                    }
+            </div>
+        </>
     )
 }
 export default JobList;

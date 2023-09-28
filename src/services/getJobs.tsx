@@ -1,8 +1,11 @@
 import { API_URL } from '../constants/constants';
+import axios from 'axios';
 
 export const getJobs = async () => {
-    const response = await fetch(`${API_URL}/joblists`);
-    const jobs = await response.json();
-    
-    return jobs;
+    try {
+        const response = await axios.get(`${API_URL}joblists`);
+        return response;
+    } catch(error) {
+        console.log(error);
+    }
 }

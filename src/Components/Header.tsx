@@ -1,8 +1,24 @@
+import { useSelector } from "react-redux";
+import Alert from "./Alert";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+
 const Header = ()=>{
+
+    const navigate = useNavigate();
+    const alert = useSelector((state:any)=>state.createjob.alert);
+
+    useEffect(()=>{
+        alert && navigate('/');
+    },[alert]);
+
     const handleClick = ()=>{
-        window.location.href = "/createjob";
+        navigate('/createjob');
     }
+
     return (
+        <>
+        {alert && <Alert></Alert>}
         <header className="bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
@@ -15,6 +31,7 @@ const Header = ()=>{
                 </div>
             </nav>
         </header>
+        </>
     )
 }
 
