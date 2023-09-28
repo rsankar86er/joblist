@@ -10,7 +10,7 @@ const Header = ()=>{
 
     useEffect(()=>{
         alert && navigate('/');
-    },[alert]);
+    },[alert, navigate]);
 
     const handleClick = ()=>{
         navigate('/createjob');

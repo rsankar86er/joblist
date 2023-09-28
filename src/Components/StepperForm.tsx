@@ -18,6 +18,15 @@ const StepperForm = ()=>{
 
     const dispatch = useDispatch();
 
+    const jobfield = useSelector((state:any)=>state.createjob.job);
+
+    useEffect(()=>{
+        Object.entries(jobfield).forEach(([key, value]) => {
+            formik.setFieldValue(key, value);
+        })
+        // eslint-disable-next-line
+    },[step]);
+
     const onHandleBack = ()=>{
         setStep(step-1);
     }
@@ -31,14 +40,6 @@ const StepperForm = ()=>{
             step === 2 && await createJob(values);
         }
     });
-
-    const jobfield = useSelector((state:any)=>state.createjob.job);
-
-    useEffect(()=>{
-        Object.entries(jobfield).forEach(([key, value]) => {
-            formik.setFieldValue(key, value);
-        })
-    },[step]);
 
     const FormStep = (step:any)=>{
         switch(step){
@@ -76,7 +77,6 @@ const StepperForm = ()=>{
                             </div>
                         </div>
                     )
-                    break;
                     case 2: return(
                 <div className="step2">
                     <div className="row flex justify-between">
@@ -121,7 +121,6 @@ const StepperForm = ()=>{
                         </div>
                     </div>
                 </div>)
-                break;
                     }
     }
     
