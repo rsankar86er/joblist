@@ -20,7 +20,7 @@ body {
   }
   .form-size{
     width:577px;
-    height: 564px;
+    min-height: 564px;
   }
   .text-white{
     color: #FAFAFA;

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Formik, Form, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const CreateJobSchema = Yup.object().shape({
-    jobtitle: Yup.string().required('Required'),
-    companyname: Yup.string().required('Required'),
+    jobtitle: Yup.string().required('Job Title is required'),
+    companyname: Yup.string().required('Company Name is required'),
+    industry: Yup.string().required('Industry is required'),
 });
 
-const formInitialValues = {jobtitle:'',companyname:''};
+const formInitialValues = {jobtitle:'',companyname:'', industry:''};
 
 const StepperForm = ()=>{
     const [step, setStep] = useState(1);
@@ -26,7 +27,7 @@ const StepperForm = ()=>{
             console.log(values);
         }
     });
-    console.log(formik.errors, formik.touched);
+
     const FormStep = (step:any)=>{
         switch(step){
                     case 1: return(
@@ -38,27 +39,28 @@ const StepperForm = ()=>{
                             </div>
                             <div className="row pt-6 pb-1">
                                 <label className="block w-full text-sm font-medium">Job Title <span className="text-red">*</span></label>
-                                <input type="text" id="jobtitle" name="jobtitle" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.jobtitle} className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder focus:grey-border" placeholder="ex. UX UI Designer"></input>
-                                {formik.errors.jobtitle && formik.touched.jobtitle ? ( <div>{formik.errors.jobtitle}</div>) : null}
+                                <input type="text" id="jobtitle" name="jobtitle" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.jobtitle} className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder focus:grey-border" placeholder="ex. UX UI Designer"></input>
+                                {formik.errors.jobtitle && formik.touched.jobtitle ? ( <div className="text-sm font-normal text-red ml-1 mt-1">{formik.errors.jobtitle}</div>) : null}
                             </div>
                             <div className="row pt-6 pb-1">
                                 <label className="block w-full text-sm font-medium">Company Name <span className="text-red">*</span></label>
-                                <input type="text" id="companyname" name="companyname" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.companyname} className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder focus:grey-border" placeholder="ex. Google"></input>
-                                {formik.errors.companyname && formik.touched.companyname ? ( <div>{formik.errors.companyname}</div>) : null}
+                                <input type="text" id="companyname" name="companyname" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.companyname} className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder focus:grey-border" placeholder="ex. Google"></input>
+                                {formik.errors.companyname && formik.touched.companyname ? ( <div className="text-sm font-normal text-red ml-1 mt-1">{formik.errors.companyname}</div>) : null}
                             </div>
                             <div className="row pt-6 pb-1">
                                 <label className="block w-full text-sm font-medium">Industry <span className="text-red">*</span></label>
-                                <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder focus:grey-border" placeholder="ex. Information Technology"></input>
+                                <input type="text" id="industry" name="industry" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.industry} className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder focus:grey-border" placeholder="ex. Information Technology"></input>
+                                {formik.errors.industry && formik.touched.industry ? ( <div className="text-sm font-normal text-red ml-1 mt-1">{formik.errors.industry}</div>) : null}
                             </div>
                             <div className="row pt-6 pb-1">
                                 <label className="block w-full text-sm font-medium">Location</label>
                             </div>
                             <div className="row flex">
                                 <div className="grow mr-6">
-                                    <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="ex. Chennai"></input>
+                                    <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="ex. Chennai"></input>
                                 </div>
                                 <div className="grow">
-                                    <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="ex. In-office"></input>
+                                    <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="ex. In-office"></input>
                                 </div>
                             </div>
                         </div>
@@ -76,10 +78,10 @@ const StepperForm = ()=>{
                     </div>
                     <div className="row flex">
                         <div className="grow mr-6">
-                            <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="Minimum"></input>
+                            <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="Minimum"></input>
                         </div>
                         <div className="grow">
-                            <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="Maximum"></input>
+                            <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="Maximum"></input>
                         </div>
                     </div>
                     <div className="row pt-6 pb-1">
@@ -87,19 +89,19 @@ const StepperForm = ()=>{
                     </div>
                     <div className="row flex">
                         <div className="grow mr-6">
-                            <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="Minimum"></input>
+                            <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="Minimum"></input>
                         </div>
                         <div className="grow">
-                            <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder" placeholder="Maximum"></input>
+                            <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder" placeholder="Maximum"></input>
                         </div>
                     </div>
                     <div className="row pt-6 pb-1">
                         <label className="block w-full text-sm font-medium">Time</label>
-                        <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder focus:grey-border" placeholder="ex. Full-Time (9AM to 6PM IST)"></input>
+                        <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder focus:grey-border" placeholder="ex. Full-Time (9AM to 6PM IST)"></input>
                     </div>
                     <div className="row pt-6 pb-1">
                         <label className="block w-full text-sm font-medium">Total employees</label>
-                        <input type="text" className="block w-full text-sm rounded-md grey-border p-1 placeholder:placeholder focus:grey-border" placeholder="ex. 100"></input>
+                        <input type="text" className="block w-full text-sm rounded-md grey-border px-1 py-2 placeholder:placeholder focus:grey-border" placeholder="ex. 100"></input>
                     </div>
                     <div className="row pt-6 pb-1">
                         <label className="block w-full text-sm font-medium">Apply type</label>
@@ -119,9 +121,9 @@ const StepperForm = ()=>{
                 {
                     FormStep(step)
                 }
-                <div className="block w-full flex justify-end">
+                <div className="w-full flex justify-end pt-6">
                     {step === 1 ? <button className="btn-primary text-md font-medium text-white py-2 px-4 rounded" onClick={onHandleNext}>Next</button>:
-                    <div className="block w-full flex justify-between">
+                    <div className="w-full flex justify-between">
                         <button className="btn-secondary text-md font-medium text-blue py-2 px-4 rounded" onClick={onHandleBack}>Back</button>
                         <button className="btn-primary text-md font-medium text-white py-2 px-4 rounded">Save</button>
                     </div>
