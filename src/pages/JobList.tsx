@@ -3,13 +3,15 @@ import Header from "../components/Header";
 import JobCard from "../components/JobCard";
 import { getJobs } from "../services/getJobs";
 import Loader from "../components/Loader";
+import { useSelector } from "react-redux";
 
 const JobList = () => {
     const [jobs, setJobs] = useState([]);
+    const alert = useSelector((state:any)=>state.createjob.alert);
 
     useEffect(() => {
         getJobs().then((response)=>{setJobs(response?.data)});
-    }, []);
+    }, [alert]);
     
     return (
         <>

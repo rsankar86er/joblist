@@ -1,1 +1,2 @@
 export const API_URL="https://650bd81447af3fd22f668f6c.mockapi.io/job-posting/api/v1/";
+export const CREATE_JOB = {jobtitle:'',companyname:'', industry:'', location:'', remote:'', minexp:'', maxexp:'', minsalary:'', maxsalary:'', time:'', employees:'', applytype:'1'}

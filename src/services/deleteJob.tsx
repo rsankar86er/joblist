@@ -3,13 +3,13 @@ import axios from 'axios';
 import { setAlert, setAlertmeesage, setAlerttype } from "../redux/createJobReducer";
 import { store } from '../redux/store';
 
-export const createJob = async (formdata:any) => {
+export const deleteJob = async (id:any) => {
     try {
-        const response = await axios.post(`${API_URL}joblists`,formdata);
-        if(response.statusText === 'Created'){
+        const response = await axios.delete(`${API_URL}joblists/${id}`);
+        if(response){
             store.dispatch(setAlert(true));
-            store.dispatch(setAlertmeesage('Job has been successfully created'));
-            store.dispatch(setAlerttype('success'));
+            store.dispatch(setAlertmeesage('Job has been deleted'));
+            store.dispatch(setAlerttype('error'));
         }
     } catch(error) {
         console.log(error);

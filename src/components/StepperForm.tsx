@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { setJob } from "../redux/createJobReducer";
 import { createJob } from "../services/createJob";
+import { CREATE_JOB } from '../constants/constants';
+import { editJob } from "../services/editJob";
 
 const CreateJobSchema = Yup.object().shape({
     jobtitle: Yup.string().required('Job Title is required'),
@@ -11,21 +13,20 @@ const CreateJobSchema = Yup.object().shape({
     industry: Yup.string().required('Industry is required'),
 });
 
-const formInitialValues = {jobtitle:'',companyname:'', industry:'', location:'', remote:'', minexp:'', maxexp:'', minsalary:'', maxsalary:'', time:'', employees:'', applytype:'1'};
-
 const StepperForm = ()=>{
+
     const [step, setStep] = useState(1);
-
     const dispatch = useDispatch();
-
     const jobfield = useSelector((state:any)=>state.createjob.job);
+        
+    const formInitialValues = CREATE_JOB;
 
     useEffect(()=>{
         Object.entries(jobfield).forEach(([key, value]) => {
             formik.setFieldValue(key, value);
         })
         // eslint-disable-next-line
-    },[step]);
+    },[step,jobfield.id]);
 
     const onHandleBack = ()=>{
         setStep(step-1);
@@ -37,7 +38,7 @@ const StepperForm = ()=>{
         onSubmit: async (values) => {
             dispatch(setJob(values));
             step === 1 && setStep(step+1);
-            step === 2 && await createJob(values);
+            jobfield.id ? step === 2 && await editJob(jobfield.id, values) : step === 2 && await createJob(values);
         }
     });
 
@@ -136,7 +137,7 @@ const StepperForm = ()=>{
                     {step === 1 ? <button type="submit" className="btn-primary text-md font-medium text-white py-2 px-4 rounded">Next</button>:
                     <div className="w-full flex justify-between">
                         <button type="button" className="btn-secondary text-md font-medium text-blue py-2 px-4 rounded" onClick={onHandleBack}>Back</button>
-                        <button type="submit" className="btn-primary text-md font-medium text-white py-2 px-4 rounded">Save</button>
+                        <button type="submit" className="btn-primary text-md font-medium text-white py-2 px-4 rounded">{jobfield.id? 'Update':'Save'}</button>
                     </div>
                     }
                 </div>
